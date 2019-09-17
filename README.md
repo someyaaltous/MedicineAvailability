@@ -22,14 +22,15 @@ Website:
 
 ## How to Use our website !! 
  - Clone the project, and cd to its directory
- - Run npm i to install npm deps 
+ - Run npm i to install npm deps for client and server  
  
        npm i
-           
-- create database 
+- create database locally
+- create config.env file
+- Add DATABASE_URL and SECRET in config.env file 
 - Run this to start the website:
  
-       npm start
+       npm run dev
   
   
 
