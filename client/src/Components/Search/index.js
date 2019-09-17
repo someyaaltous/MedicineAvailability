@@ -20,8 +20,8 @@ class Search extends Component {
 	
 		axios.get(`/api/pharmacyDropDown`).then(({ data }) => {
 			const pharmacyInformation=data.data;
-   		const	pharmacyNames=pharmacyInformation.map(item => item.pharmacyname);
-    	const	pharmacyLocation=pharmacyInformation.map(item => item.location);
+   		let	pharmacyNames=pharmacyInformation.map(item => item.pharmacyname);
+    	let	pharmacyLocation=pharmacyInformation.map(item => item.location);
 			pharmacyNames=[...new Set(pharmacyNames)]
 			pharmacyLocation=[...new Set(pharmacyLocation)]
 				this.setState({ dropdownlocation:pharmacyLocation,dropdownPharmacyname:pharmacyNames })
