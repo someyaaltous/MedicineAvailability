@@ -22,12 +22,18 @@ Website:
 
 ## How to Use our website !! 
  - Clone the project, and cd to its directory
- - Run npm i to install npm deps for client and server  
+ - Run npm i to install npm deps   
  
        npm i
+- cd client to install npm deps
+
+       npm i
 - Create database locally
-- Create config.env file
-- Add DATABASE_URL and SECRET in config.env file 
+- Create config.env file in root and put these variables in it:
+```
+   DATABASE_URL = postgress://{username}:{password}@localhost:5432/{databasename}
+   SECRET = {secret}
+   ```
 - Run this to start the website:
  
        npm run dev
