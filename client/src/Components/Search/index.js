@@ -38,6 +38,8 @@ class Search extends Component {
 
     handleSearch = () => {
         const { medname, location, pharmacy } = this.state
+        console.log("33333333333333", pharmacy);
+
         const { history } = this.props
         this.setState({ searchButtonClicked: true })
 
@@ -56,7 +58,7 @@ class Search extends Component {
             } else if (location) {
                 result = data.data.filter(ele => ele.location === location)
             } else if (pharmacy) {
-                result = data.data.filter(ele => ele.pharmacy === pharmacy)
+                result = data.data.filter(ele => ele.pharmacyname === pharmacy)
             } else {
                 result = data.data
             }
@@ -138,10 +140,10 @@ class Search extends Component {
             )
         } <
         /select> {!medname && searchButtonClicked ? ( <
-            p className = "noMedicineName" > Please enter a medicine name < /p>
-        ) : ( <
-            p > < /p>
-        )
+    p className = "noMedicineName" > Please enter a medicine name < /p>
+): ( <
+    p > < /p>
+)
 }
 
 {
