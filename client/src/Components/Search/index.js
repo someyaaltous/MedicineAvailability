@@ -14,8 +14,6 @@ class Search extends Component {
         loading: false,
         dropdownlocation: [],
         dropdownPharmacyname: [],
-        dropdownlocation2: [],
-        dropdownPharmacyname2: [],
         data: [],
         byPharmacy: "By-Pharmacy-Hidden"
     }
@@ -28,7 +26,7 @@ class Search extends Component {
 
             pharmacyNames = [...new Set(pharmacyNames)]
             pharmacyLocation = [...new Set(pharmacyLocation)]
-            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames, dropdownlocation2: [...pharmacyLocation], dropdownPharmacyname2: [...pharmacyNames], data: pharmacyInformation })
+            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames, data: pharmacyInformation })
 
         })
     }
