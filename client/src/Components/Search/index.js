@@ -12,23 +12,19 @@ class Search extends Component {
 		pharmacy: '',
 		searchButtonClicked: false,
 		loading: false,
-		dropdownlocation:["0"],
-		dropdownPharmacyname:["0"],
+		dropdownlocation:[],
+		dropdownPharmacyname:[],
 
 	}
   componentDidMount() {
-	let pharmacyNames=[];
-	let pharmacyLocation=[];
-  let uniqeArray=[];
-		axios.get(`/pharmacyDropDown`).then(({ data }) => {
-			uniqeArray=data.data;
-			pharmacyNames=uniqeArray.map(item => item.pharmacyname);
-			pharmacyLocation=uniqeArray.map(item => item.location);
+	
+		axios.get(`/api/pharmacyDropDown`).then(({ data }) => {
+			const pharmacyInformation=data.data;
+   		const	pharmacyNames=pharmacyInformation.map(item => item.pharmacyname);
+    	const	pharmacyLocation=pharmacyInformation.map(item => item.location);
 			pharmacyNames=[...new Set(pharmacyNames)]
 			pharmacyLocation=[...new Set(pharmacyLocation)]
 				this.setState({ dropdownlocation:pharmacyLocation,dropdownPharmacyname:pharmacyNames })
-
-				console.log("hello ", data)
 
 		})
 }
@@ -70,7 +66,7 @@ class Search extends Component {
 			}
 		})
 	}
-
+	
 	searchByLocation = ({ target: { value } }) => {
 		this.setState({ location: value })
 	}
@@ -114,8 +110,8 @@ class Search extends Component {
 					onChange={this.searchByLocation}
 					>
 						<option value="">By Location</option>
-					{dropdownlocation.map(element=>
-					<option value={element}>{element}</option>
+					{dropdownlocation.map((element,i)=>
+					<option key={i} value={element}>{element}</option>
 				
 					)}
 				</select>
@@ -126,8 +122,8 @@ class Search extends Component {
 					className="By-Pharmacy"
 					>
 					<option value="">By Pharmacy</option>
-					{dropdownPharmacyname.map(element=>
-					<option value={element}>{element}</option>
+					{dropdownPharmacyname.map((element,i)=>
+					<option key={i} value={element}>{element}</option>
 				
 					)}
 				</select>
