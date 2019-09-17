@@ -14,7 +14,10 @@ class Search extends Component {
         loading: false,
         dropdownlocation: [],
         dropdownPharmacyname: [],
-
+        dropdownlocation2: [],
+        dropdownPharmacyname2: [],
+        data: [],
+        byPharmacy: "By-Pharmacy-Hidden"
     }
     componentDidMount() {
 
@@ -25,7 +28,7 @@ class Search extends Component {
 
             pharmacyNames = [...new Set(pharmacyNames)]
             pharmacyLocation = [...new Set(pharmacyLocation)]
-            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames })
+            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames, dropdownlocation2: [...pharmacyLocation], dropdownPharmacyname2: [...pharmacyNames], data: pharmacyInformation })
 
         })
     }
@@ -36,7 +39,8 @@ class Search extends Component {
         })
     }
 
-    handleSearch = () => {
+    handleSearch = (event) => {
+        event.preventDefault();
         const { medname, location, pharmacy } = this.state
 
         const { history } = this.props
@@ -73,7 +77,17 @@ class Search extends Component {
     }
 
     searchByLocation = ({ target: { value } }) => {
-        this.setState({ location: value })
+
+        const arr = this.state.data.filter(ele => {
+            return ele.location === value
+        })
+        if (arr.length > 0)
+            this.setState({ byPharmacy: "By-Pharmacy" })
+        else
+            this.setState({ byPharmacy: "By-Pharmacy-Hidden" })
+
+        console.log(arr, "000000")
+        this.setState({ location: value, dropdownPharmacyname: arr.map(ele => ele.pharmacyname) })
     }
 
     searchByPharmacy = ({ target: { value } }) => {
@@ -98,7 +112,9 @@ class Search extends Component {
                     p className = "span" >
                     The app is an easy way to search
                     for the medicine you need in your next door pharmacy. <
-                    /p> <
+                    /p>  <
+                    form >
+                    <
                     input className = "searchBar"
                     value = { medname }
                     onChange = { this.changeInput }
@@ -110,7 +126,8 @@ class Search extends Component {
                     <
                     FontAwesomeIcon icon = "search" / >
                     <
-                    /button> <
+                    /button>  < /
+                    form > <
                     select className = "By-Location"
                     value = { location }
                     name = "By location"
@@ -128,7 +145,7 @@ class Search extends Component {
             select value = { pharmacy }
             name = "By pharmacy"
             onChange = { this.searchByPharmacy }
-            className = "By-Pharmacy" >
+            className = { this.state.byPharmacy } >
                 <
                 option value = "" > By Pharmacy < /option> {
             dropdownPharmacyname.map((element, i) =>
