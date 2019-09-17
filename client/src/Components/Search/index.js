@@ -38,7 +38,6 @@ class Search extends Component {
 
     handleSearch = () => {
         const { medname, location, pharmacy } = this.state
-        console.log("33333333333333", pharmacy);
 
         const { history } = this.props
         this.setState({ searchButtonClicked: true })
