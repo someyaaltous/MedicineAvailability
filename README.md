@@ -21,7 +21,13 @@ Website:
 ![Untitled Diagram](https://user-images.githubusercontent.com/36266244/65016743-ad8d8700-d92d-11e9-997b-e233afa96009.png)
 
 ## How to Use our website !! 
- - Clone the project, and cd to its directory
+ - In terminal  
+ - Clone these repo: 
+ ``` 
+     git clone {https://github.com/someyaaltous/MedicineAvailability.git} 
+     cd name of repo cd {MedicineAvailability}
+  ```
+
  - Run npm i to install npm deps   
  
        npm i
