@@ -22,6 +22,7 @@ class Search extends Component {
             const pharmacyInformation = data.data;
             let pharmacyNames = pharmacyInformation.map(item => item.pharmacyname);
             let pharmacyLocation = pharmacyInformation.map(item => item.location);
+
             pharmacyNames = [...new Set(pharmacyNames)]
             pharmacyLocation = [...new Set(pharmacyLocation)]
             this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames })
@@ -137,10 +138,10 @@ class Search extends Component {
             )
         } <
         /select> {!medname && searchButtonClicked ? ( <
-    p className = "noMedicineName" > Please enter a medicine name < /p>
-): ( <
-    p > < /p>
-)
+            p className = "noMedicineName" > Please enter a medicine name < /p>
+        ) : ( <
+            p > < /p>
+        )
 }
 
 {
