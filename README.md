@@ -25,8 +25,8 @@ Website:
  - Run npm i to install npm deps for client and server  
  
        npm i
-- create database locally
-- create config.env file
+- Create database locally
+- Create config.env file
 - Add DATABASE_URL and SECRET in config.env file 
 - Run this to start the website:
  
