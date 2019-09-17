@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import "./form.css"
-import axios from "axios"
+import React, { Component } from "react";
+import "./form.css";
+import axios from "axios";
 
 class UpdateForm extends Component {
   state = {
@@ -12,11 +12,12 @@ class UpdateForm extends Component {
     prescription: false,
     medicineid: 0,
     msg: "",
-    updated: false
-  }
+    updated: false,
+    details: ""
+  };
 
   componentDidMount() {
-    const { details } = this.props
+    const { details } = this.props;
     this.setState({
       price: details.price,
       company: details.company,
@@ -24,21 +25,36 @@ class UpdateForm extends Component {
       name: details.name,
       prescription: details.prescription,
       quantity: details.soldout,
-      medicineid: details.medicineid
-    })
+      medicineid: details.medicineid,
+      details
+    });
   }
 
   handleChange = event => {
-    const { value, name } = event.target
-    this.setState({ [name]: value })
-  }
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
+  };
 
   toggle = event => {
-    const { name } = event.target
-    this.setState({ [name]: !this.state[name] })
-  }
+    const { name } = event.target;
+    this.setState({ [name]: !this.state[name] });
+  };
+  checkIfUpdate = () => {
+    const { details, company, price, quantity, prescription } = this.state;
+
+    if (
+      details.price == price &&
+      details.company === company &&
+      details.soldout === quantity &&
+      details.prescription === prescription
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   updateFormInfo = event => {
-    event.preventDefault()
+    event.preventDefault();
 
     const {
       name,
@@ -48,8 +64,12 @@ class UpdateForm extends Component {
       quantity,
       prescription,
       medicineid
-    } = this.state
+    } = this.state;
 
+    if (!this.checkIfUpdate()) {
+      this.setState({ updated: true, msg: "Already up to date" });
+      return;
+    }
     axios
       .patch(`/api/pharmacy/medicine/${medicineid}`, {
         name,
@@ -61,21 +81,26 @@ class UpdateForm extends Component {
       })
       .then(({ data }) => {
         if (data.updated) {
-          this.setState({ updated: true, msg: "Your data has been updated" })
+          const details = {
+            soldout: quantity,
+            price,
+            company,
+            prescription
+          };
+
+          this.setState({
+            updated: true,
+            msg: "Your data has been updated",
+            details
+          });
         } else {
-          this.setState({ updated: true, msg: "request failed" })
+          this.setState({ updated: true, msg: "request failed" });
         }
-      })
-  }
+      });
+  };
 
   render() {
-    const {
-      name,
-      quantity,
-      price,
-      company,
-      prescription
-    } = this.state
+    const { updated,msg,name, quantity, price, company, prescription } = this.state;
     return (
       <div className="updateForm">
         <form onSubmit={this.updateFormInfo} className="upForm">
@@ -138,11 +163,11 @@ class UpdateForm extends Component {
           </div>
 
           <input className="Update" type="submit" value=" Update" />
-          {this.state.updated && <p className="updateMsg">{this.state.msg}</p>}
+          {updated && <p className="updateMsg">{msg}</p>}
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default UpdateForm
+export default UpdateForm;
