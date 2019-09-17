@@ -11,9 +11,27 @@ class Search extends Component {
 		location: '',
 		pharmacy: '',
 		searchButtonClicked: false,
-		loading: false
-	}
+		loading: false,
+		dropdownlocation:["0"],
+		dropdownPharmacyname:["0"],
 
+	}
+  componentDidMount() {
+	let pharmacyNames=[];
+	let pharmacyLocation=[];
+  let uniqeArray=[];
+		axios.get(`/pharmacyDropDown`).then(({ data }) => {
+			uniqeArray=data.data;
+			pharmacyNames=uniqeArray.map(item => item.pharmacyname);
+			pharmacyLocation=uniqeArray.map(item => item.location);
+			pharmacyNames=[...new Set(pharmacyNames)]
+			pharmacyLocation=[...new Set(pharmacyLocation)]
+				this.setState({ dropdownlocation:pharmacyLocation,dropdownPharmacyname:pharmacyNames })
+
+				console.log("hello ", data)
+
+		})
+}
 	changeInput = ({ target: { value, name } }) => {
 		this.setState({ [name]: value, searchButtonClicked: false })
 	}
@@ -68,9 +86,11 @@ class Search extends Component {
 			location,
 			pharmacy,
 			searchButtonClicked,
-			loading
-		} = this.state
+			loading,
+			dropdownlocation,
+			dropdownPharmacyname
 
+		} = this.state
 		return (
 			<div>
 				<p className="span">
@@ -92,21 +112,24 @@ class Search extends Component {
 					value={location}
 					name="By location"
 					onChange={this.searchByLocation}
-				>
-					<option value="">By Location</option>
-					<option value="Ras El-Jora">Ras El-Jora</option>
-					<option value="Al-Manara square">Al-Manara square</option>
-					<option value="Ein Sara">Ein Sara</option>
+					>
+						<option value="">By Location</option>
+					{dropdownlocation.map(element=>
+					<option value={element}>{element}</option>
+				
+					)}
 				</select>
 				<select
 					value={pharmacy}
 					name="By pharmacy"
 					onChange={this.searchByPharmacy}
 					className="By-Pharmacy"
-				>
+					>
 					<option value="">By Pharmacy</option>
-					<option value="Al-Eman Pharmacy">Al-Eman Pharmacy</option>
-					<option value="Al-Jazera">Al-Jazera</option>
+					{dropdownPharmacyname.map(element=>
+					<option value={element}>{element}</option>
+				
+					)}
 				</select>
 				{!medname && searchButtonClicked ? (
 					<p className="noMedicineName">Please enter a medicine name</p>

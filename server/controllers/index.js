@@ -8,6 +8,7 @@ const { checkAuth } = require('./checkAuth')
 const getPharmacyMed = require('./getPharmacyMed')
 const { updateMedForm } = require('./updatePharMed')
 const logout = require('./logout')
+const { getpharmacyInfo } = require('./getpharmacyInformation')
 
 router.get('/api/medicine/:medname', search.get)
 router.get('/api/pharmacy/medicine/:medname', auth, getPharmacyMed.updatePharmacy)
@@ -16,5 +17,6 @@ router.post('/api/login', login.get)
 router.post('/api/pharmacy/medicine', auth, addMedicine)
 router.patch('/api/pharmacy/medicine/:medicineid', auth, updateMedForm)
 router.get('/api/logout', logout.get)
+router.get('/pharmacyDropDown', getpharmacyInfo)
 
 module.exports = router
