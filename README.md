@@ -18,8 +18,7 @@ Website:
 
 
 ## Database schema 
-![Untitled Diagram (3)](https://user-images.githubusercontent.com/47992412/63943091-a5050780-ca77-11e9-972b-106a9e88e917.png)
-
+![Untitled Diagram](https://user-images.githubusercontent.com/36266244/65016743-ad8d8700-d92d-11e9-997b-e233afa96009.png)
 
 ## How to Use our website !! 
  - Clone the project, and cd to its directory
