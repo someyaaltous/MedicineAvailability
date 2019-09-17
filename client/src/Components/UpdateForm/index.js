@@ -12,7 +12,8 @@ class UpdateForm extends Component {
     prescription: false,
     medicineid: 0,
     msg: "",
-    details: this.props.details
+    updated: false,
+    details: ""
   };
 
   componentDidMount() {
@@ -24,7 +25,8 @@ class UpdateForm extends Component {
       name: details.name,
       prescription: details.prescription,
       quantity: details.soldout,
-      medicineid: details.medicineid
+      medicineid: details.medicineid,
+      details
     });
   }
 
@@ -38,9 +40,7 @@ class UpdateForm extends Component {
     this.setState({ [name]: !this.state[name] });
   };
   checkIfUpdate = () => {
-    const { details } = this.state;
-
-    const { company, price, quantity, prescription } = this.state;
+    const { details, company, price, quantity, prescription } = this.state;
 
     if (
       details.price == price &&
@@ -100,7 +100,7 @@ class UpdateForm extends Component {
   };
 
   render() {
-    const { name, quantity, price, company, prescription } = this.state;
+    const { updated,msg,name, quantity, price, company, prescription } = this.state;
     return (
       <div className="updateForm">
         <form onSubmit={this.updateFormInfo} className="upForm">
@@ -163,7 +163,7 @@ class UpdateForm extends Component {
           </div>
 
           <input className="Update" type="submit" value=" Update" />
-          {this.state.updated && <p className="updateMsg">{this.state.msg}</p>}
+          {updated && <p className="updateMsg">{msg}</p>}
         </form>
       </div>
     );
