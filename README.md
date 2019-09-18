@@ -41,6 +41,17 @@ Website:
    DATABASE_URL = postgress://{username}:{password}@localhost:5432/{databasename}
    SECRET = {secret}
    ```
+- build database table :
+```
+   node ./server/database/db_bulid.js
+ ```
+- if you want initial values for database
+```
+    psql 
+    \c {databasename} 
+    \i ./server/database/init_values.sql
+
+```
 - Run this to start the website:
        
        npm run dev
