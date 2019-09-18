@@ -14,18 +14,17 @@ class Search extends Component {
         loading: false,
         dropdownlocation: [],
         dropdownPharmacyname: [],
-
+        data: [],
+        byPharmacy: "By-Pharmacy-Hidden"
     }
     componentDidMount() {
 
         axios.get(`/api/pharmacyDropDown`).then(({ data }) => {
             const pharmacyInformation = data.data;
-            let pharmacyNames = pharmacyInformation.map(item => item.pharmacyname);
             let pharmacyLocation = pharmacyInformation.map(item => item.location);
 
-            pharmacyNames = [...new Set(pharmacyNames)]
             pharmacyLocation = [...new Set(pharmacyLocation)]
-            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames })
+            this.setState({ dropdownlocation: pharmacyLocation, data: pharmacyInformation })
 
         })
     }
@@ -36,7 +35,8 @@ class Search extends Component {
         })
     }
 
-    handleSearch = () => {
+    handleSearch = (event) => {
+        event.preventDefault();
         const { medname, location, pharmacy } = this.state
 
         const { history } = this.props
@@ -73,7 +73,21 @@ class Search extends Component {
     }
 
     searchByLocation = ({ target: { value } }) => {
-        this.setState({ location: value })
+
+
+        // pharmacyDLocation when the user chose the location the list of pharmacy related will display 
+        const { data } = this.state
+        const pharmacyDependsLocation = data.reduce((acc, curr) => {
+            if (curr.location === value)
+                acc.push(curr.pharmacyname)
+            return acc
+        }, [])
+        if (pharmacyDependsLocation.length > 0)
+            this.setState({ byPharmacy: "By-Pharmacy" })
+        else
+            this.setState({ byPharmacy: "By-Pharmacy-Hidden" })
+
+        this.setState({ location: value, dropdownPharmacyname: pharmacyDependsLocation })
     }
 
     searchByPharmacy = ({ target: { value } }) => {
@@ -98,7 +112,9 @@ class Search extends Component {
                     p className = "span" >
                     The app is an easy way to search
                     for the medicine you need in your next door pharmacy. <
-                    /p> <
+                    /p>  <
+                    form >
+                    <
                     input className = "searchBar"
                     value = { medname }
                     onChange = { this.changeInput }
@@ -110,7 +126,18 @@ class Search extends Component {
                     <
                     FontAwesomeIcon icon = "search" / >
                     <
-                    /button> <
+                    /button>  < /
+                    form > {
+                        searchButtonClicked && medname && !loading && !pharmaciesResult && ( <
+                            p className = "noResult" > There is no result < /p>
+                        )
+                    } {
+                        !medname && searchButtonClicked ? ( <
+                            p className = "noMedicineName" > Please enter a medicine name < /p>
+                        ) : ( <
+                            p > < /p>
+                        )
+                    } <
                     select className = "By-Location"
                     value = { location }
                     name = "By location"
@@ -128,7 +155,7 @@ class Search extends Component {
             select value = { pharmacy }
             name = "By pharmacy"
             onChange = { this.searchByPharmacy }
-            className = "By-Pharmacy" >
+            className = { this.state.byPharmacy } >
                 <
                 option value = "" > By Pharmacy < /option> {
             dropdownPharmacyname.map((element, i) =>
@@ -138,32 +165,25 @@ class Search extends Component {
 
             )
         } <
-        /select> {!medname && searchButtonClicked ? ( <
-    p className = "noMedicineName" > Please enter a medicine name < /p>
-): ( <
-    p > < /p>
-)
-}
+        /select> 
 
-{
-    searchButtonClicked && medname && loading && ( <
-        div className = "loadingSearchP " >
-        <
-        ClipLoader className = "loadingSearch"
-        sizeUnit = { 'px' }
-        size = { 35 }
-        color = { '#123abc' }
-        /> < /
-        div >
-    )
-}
+    {
+        searchButtonClicked && medname && loading && ( <
+            div className = "loadingSearchP " >
+            <
+            ClipLoader className = "loadingSearch"
+            sizeUnit = { 'px' }
+            size = { 35 }
+            color = { '#123abc' }
+            /> < /
+            div >
+        )
+    }
 
-{
-    searchButtonClicked && medname && !loading && !pharmaciesResult && ( <
-        p className = "noResult" > There is no result < /p>
-    )
-} <
-/div>
+    <
+    /div>
+
+
 )
 }
 }
