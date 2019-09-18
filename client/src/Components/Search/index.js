@@ -77,11 +77,12 @@ class Search extends Component {
 
 
         // pharmacyDLocation when the user chose the location the list of pharmacy related will display 
-        const pharmacyDependsLocation = []
-        this.state.data.forEach(ele => {
-            if (ele.location === value)
-                pharmacyDependsLocation.push(ele.pharmacyname)
-        })
+
+        const pharmacyDependsLocation = this.state.data.reduce((acc, curr) => {
+            if (curr.location === value)
+                acc.push(curr.pharmacyname)
+            return acc
+        }, [])
         if (pharmacyDependsLocation.length > 0)
             this.setState({ byPharmacy: "By-Pharmacy" })
         else
