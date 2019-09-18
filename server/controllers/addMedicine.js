@@ -1,7 +1,7 @@
 const axios = require('axios')
-const addMedicineInfo = require('../database/queries/addMedicineInfo')
-const medicineExist = require('../database/queries/medicineExist')
-const addtopharmacy = require('../database/queries/addtopharmacy')
+const addMedicineInfo = require('../database/queries/add_medicine_info')
+const medicineExist = require('../database/queries/medicine_exist')
+const addtopharmacy = require('../database/queries/add_to_pharmacy')
 
 exports.addMedicine = (req, res) => {
   const { medName } = req.body
