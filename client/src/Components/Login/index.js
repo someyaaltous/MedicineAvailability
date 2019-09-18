@@ -68,7 +68,6 @@ class Login extends Component {
             type="email"
             name="email"
             onChange={this.changName}
-            required
           />
           <input
             className="input2"
