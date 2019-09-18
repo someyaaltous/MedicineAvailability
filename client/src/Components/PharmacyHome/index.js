@@ -34,7 +34,8 @@ class PharmacyHome extends Component {
 		this.setState({ medName: value, submitClicked: false })
 	}
 
-	submitHandler = () => {
+	submitHandler = (event) => {
+		event.preventDefault()
 		const { medName } = this.state
 		const { history } = this.props
 		this.setState({ submitClicked: true })
@@ -54,6 +55,7 @@ class PharmacyHome extends Component {
 			<div>
 				<Header home={false} />
 				<p className="searchToUpdate">Search to Update</p>
+				<form >
 				<input
 					placeholder="search/edit medicine"
 					className="pharmacySearch"
@@ -68,6 +70,7 @@ class PharmacyHome extends Component {
 				>
 					<FontAwesomeIcon icon="search" />
 				</button>
+				</form>
 				{!medName && submitClicked && <p className = "noMedName">Please enter a medicine name</p>}
 				<p className="or">
 					--------------------------- OR --------------------------
