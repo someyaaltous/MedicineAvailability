@@ -24,7 +24,6 @@ class Search extends Component {
             let pharmacyNames = pharmacyInformation.map(item => item.pharmacyname);
             let pharmacyLocation = pharmacyInformation.map(item => item.location);
 
-            pharmacyNames = [...new Set(pharmacyNames)]
             pharmacyLocation = [...new Set(pharmacyLocation)]
             this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames, data: pharmacyInformation })
 
@@ -76,16 +75,19 @@ class Search extends Component {
 
     searchByLocation = ({ target: { value } }) => {
 
-        const arr = this.state.data.filter(ele => {
-            return ele.location === value
+
+        // pharmacyDLocation when the user chose the location the list of pharmacy related will display 
+        const pharmacyDependsLocation = []
+        this.state.data.forEach(ele => {
+            if (ele.location === value)
+                pharmacyDependsLocation.push(ele.pharmacyname)
         })
-        if (arr.length > 0)
+        if (pharmacyDependsLocation.length > 0)
             this.setState({ byPharmacy: "By-Pharmacy" })
         else
             this.setState({ byPharmacy: "By-Pharmacy-Hidden" })
 
-        console.log(arr, "000000")
-        this.setState({ location: value, dropdownPharmacyname: arr.map(ele => ele.pharmacyname) })
+        this.setState({ location: value, dropdownPharmacyname: pharmacyDependsLocation })
     }
 
     searchByPharmacy = ({ target: { value } }) => {
