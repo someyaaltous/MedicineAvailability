@@ -1,4 +1,4 @@
-const updatePharmacyInfo = require('./../database/queries/updatePharmacyInfo')
+const updatePharmacyInfo = require('./../database/queries/update_pharmacy_info')
 
 exports.updatePharmacy = (req, res) => {
   const { pharmacyID } = req

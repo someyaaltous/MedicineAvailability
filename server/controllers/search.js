@@ -1,4 +1,4 @@
-const getMedInfo = require('./../database/queries/getMedInfo.js')
+const getMedInfo = require('./../database/queries/get_med_info.js')
 
 exports.get = (req, res) => {
   getMedInfo(req.params.medname)

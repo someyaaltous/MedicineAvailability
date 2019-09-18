@@ -1,4 +1,4 @@
-const pharmacyInfo = require('../database/queries/pharmacyInfo.js')
+const pharmacyInfo = require('../database/queries/pharmacy_info.js')
 
 exports.getpharmacyInfo = (request, response) => {
     pharmacyInfo()

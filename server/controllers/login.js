@@ -1,4 +1,4 @@
-const checkUser = require('../database/queries/checkUser.js')
+const checkUser = require('../database/queries/check_user.js')
 const bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken')
 

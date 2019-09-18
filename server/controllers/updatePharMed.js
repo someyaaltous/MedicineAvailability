@@ -1,7 +1,7 @@
 const {
   updateFormQuery,
   updateFormQuery2
-} = require('../database/queries/updateMedTable')
+} = require('../database/queries/update_med_table')
 
 exports.updateMedForm = (req, res) => {
   const { pharmacyID } = req
