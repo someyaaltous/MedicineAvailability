@@ -50,7 +50,7 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, password,errorMsg } = this.state
 
     return (
       <>
@@ -73,7 +73,7 @@ class Login extends Component {
             onChange={this.changName}
           />
           <input type="submit" className="login" value="Login" />
-          {this.state.errorMsg && <p className="invalidMsg">User or password WRONG</p>}
+          {errorMsg && <p className="invalidMsg">User or password WRONG</p>}
         </form>
       </>
     )

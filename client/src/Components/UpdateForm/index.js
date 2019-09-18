@@ -121,11 +121,12 @@ class UpdateForm extends Component {
           </label>
           <input
             className="priceStyle"
-            type="text"
+            type="number"
             name="price"
             value={price}
             placeholder=""
             onChange={this.handleChange}
+            required
           />
           <label className="companyName" htmlFor="company">
             Company
@@ -137,6 +138,7 @@ class UpdateForm extends Component {
             value={company}
             placeholder=""
             onChange={this.handleChange}
+            required
           />
 
           <div className="checks">
