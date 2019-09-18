@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import NavBar from "./../NavBar"
-import "./style.css"
-import axios from "axios"
+import React, { Component } from "react";
+import NavBar from "./../NavBar";
+import "./style.css";
+import axios from "axios";
 
 class AddMedicine extends Component {
   state = {
@@ -13,55 +13,56 @@ class AddMedicine extends Component {
     submitClicked: false,
     login: false,
     username: ""
-  }
+  };
 
   componentDidMount = () => {
-    const { history } = this.props
+    const { history } = this.props;
 
     axios.get("/check-auth").then(({ data }) => {
-      const { success, username } = data
+      const { success, username } = data;
 
       if (success) {
         this.setState({
           login: true,
           username
-        })
+        });
       } else {
-        history.push("/login")
+        history.push("/login");
       }
-    })
-  }
+    });
+  };
 
   updateInput = event => {
-    const { value, name } = event.target
-    this.setState({ [name]: value, submitClicked: false })
-  }
+    const { value, name } = event.target;
+    this.setState({ [name]: value, submitClicked: false });
+  };
 
   toggleCheckbox = () => {
-    this.setState({ prescription: !this.state.prescription })
-  }
+    this.setState({ prescription: !this.state.prescription });
+  };
 
   AddMedicineInfo = event => {
-    event.preventDefault()
-    this.setState({ msg: "" })
+    event.preventDefault();
+    this.setState({ msg: "" });
 
-    const { medName, medCompany, medPrice, prescription } = this.state
-    this.setState({ submitClicked: true })
+    const { medName, medCompany, medPrice, prescription } = this.state;
+    this.setState({ submitClicked: true });
     if (medName === "" || medCompany === "" || medPrice === "") {
-      return
+      return;
     }
 
-    axios.post("/api/pharmacy/medicine", {
-      medName,
-      medCompany,
-      prescription,
-      medPrice
-    })
-      .then(res => {
-        const { message } = res.data
-        this.setState({ msg: message })
+    axios
+      .post("/api/pharmacy/medicine", {
+        medName,
+        medCompany,
+        prescription,
+        medPrice
       })
-  }
+      .then(res => {
+        const { message } = res.data;
+        this.setState({ msg: message });
+      });
+  };
 
   render() {
     const {
@@ -73,7 +74,7 @@ class AddMedicine extends Component {
       submitClicked,
       login,
       username
-    } = this.state
+    } = this.state;
 
     return (
       <div>
@@ -82,36 +83,45 @@ class AddMedicine extends Component {
         <p className="discrip">Fill The Form To Add A New Medicine</p>
         <form onSubmit={this.AddMedicineInfo}>
           <div className="addForm">
-            <label className="label">Medicine Name
-          <input
+            <label className="label">
+              Medicine Name
+              <input
                 className="info"
                 onChange={this.updateInput}
                 value={medName}
                 type="text"
                 name="medName"
-              /> </label>
+                required
+              />
+            </label>
             {!medCompany && submitClicked && (
               <p className="msg">Please enter a name</p>
             )}
-            <label className="label">Price
-          <input
+            <label className="label">
+              Price
+              <input
+                type="number"
                 className="info"
                 onChange={this.updateInput}
                 value={medPrice}
-                type="text"
                 name="medPrice"
-              /> </label>
+                required
+              />
+            </label>
             {!medName && submitClicked && (
               <p className="msg">Please enter Price </p>
             )}
-            <label className="label">Company
-          <input
+            <label className="label">
+              Company
+              <input
                 className="info"
                 onChange={this.updateInput}
                 value={medCompany}
                 type="text"
                 name="medCompany"
-              />     </label>
+                required
+              />
+            </label>
             {!medPrice && submitClicked && (
               <p className="msg">Please enter a Company</p>
             )}
@@ -124,14 +134,14 @@ class AddMedicine extends Component {
                 value={prescription}
               />
               Needs Prescription
-          </label>
+            </label>
             <input type="submit" value="Add" className="submitInfo" />
             {msg && <p className="addMsg">{msg}</p>}
           </div>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default AddMedicine
+export default AddMedicine;
