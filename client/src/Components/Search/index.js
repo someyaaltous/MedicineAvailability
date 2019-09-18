@@ -21,11 +21,10 @@ class Search extends Component {
 
         axios.get(`/api/pharmacyDropDown`).then(({ data }) => {
             const pharmacyInformation = data.data;
-            let pharmacyNames = pharmacyInformation.map(item => item.pharmacyname);
             let pharmacyLocation = pharmacyInformation.map(item => item.location);
 
             pharmacyLocation = [...new Set(pharmacyLocation)]
-            this.setState({ dropdownlocation: pharmacyLocation, dropdownPharmacyname: pharmacyNames, data: pharmacyInformation })
+            this.setState({ dropdownlocation: pharmacyLocation, data: pharmacyInformation })
 
         })
     }
@@ -77,8 +76,8 @@ class Search extends Component {
 
 
         // pharmacyDLocation when the user chose the location the list of pharmacy related will display 
-
-        const pharmacyDependsLocation = this.state.data.reduce((acc, curr) => {
+        const { data } = this.state
+        const pharmacyDependsLocation = data.reduce((acc, curr) => {
             if (curr.location === value)
                 acc.push(curr.pharmacyname)
             return acc
@@ -128,7 +127,17 @@ class Search extends Component {
                     FontAwesomeIcon icon = "search" / >
                     <
                     /button>  < /
-                    form > <
+                    form > {
+                        searchButtonClicked && medname && !loading && !pharmaciesResult && ( <
+                            p className = "noResult" > There is no result < /p>
+                        )
+                    } {
+                        !medname && searchButtonClicked ? ( <
+                            p className = "noMedicineName" > Please enter a medicine name < /p>
+                        ) : ( <
+                            p > < /p>
+                        )
+                    } <
                     select className = "By-Location"
                     value = { location }
                     name = "By location"
@@ -156,32 +165,25 @@ class Search extends Component {
 
             )
         } <
-        /select> {!medname && searchButtonClicked ? ( <
-    p className = "noMedicineName" > Please enter a medicine name < /p>
-): ( <
-    p > < /p>
-)
-}
+        /select> 
 
-{
-    searchButtonClicked && medname && loading && ( <
-        div className = "loadingSearchP " >
-        <
-        ClipLoader className = "loadingSearch"
-        sizeUnit = { 'px' }
-        size = { 35 }
-        color = { '#123abc' }
-        /> < /
-        div >
-    )
-}
+    {
+        searchButtonClicked && medname && loading && ( <
+            div className = "loadingSearchP " >
+            <
+            ClipLoader className = "loadingSearch"
+            sizeUnit = { 'px' }
+            size = { 35 }
+            color = { '#123abc' }
+            /> < /
+            div >
+        )
+    }
 
-{
-    searchButtonClicked && medname && !loading && !pharmaciesResult && ( <
-        p className = "noResult" > There is no result < /p>
-    )
-} <
-/div>
+    <
+    /div>
+
+
 )
 }
 }
